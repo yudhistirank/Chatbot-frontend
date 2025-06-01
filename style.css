@@ -64,3 +64,29 @@ button {
   color: white;
   cursor: pointer;
 }
+
+body.light {
+  background: #f4f4f4;
+  color: #222;
+}
+
+body.light .chat-container {
+  background-color: white;
+  color: #222;
+}
+
+#toggle-theme, #delete-history {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+body.light #toggle-theme,
+body.light #delete-history {
+  background-color: #333;
+  color: white;
+}

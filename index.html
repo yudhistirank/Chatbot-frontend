@@ -7,14 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="chat-container">
-    <h1>Chat AI 🤖</h1>
-    <div id="chat-box"></div>
-    <form id="chat-form">
-      <input type="text" id="user-input" placeholder="Ketik pesan..." autocomplete="off" required />
-      <button type="submit">Kirim</button>
-    </form>
-  </div>
+    <button id="toggle-theme">🌓 Ganti Mode </button>
+    <div class="chat-container">
+        <h1>Chat AI</h1>
+        <div id="chat-box"></div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Ketik pesan..." required />
+            <button type="submit">Kirim</button>
+        </form>
+        <button id="delete-history">🗑️ Hapus Riwayat</button>
+    </div>
+
   <script src="main.js"></script>
 </body>
 </html>
