@@ -1,33 +1,42 @@
-const chatbox = document.getElementById("chatbox");
+const chatForm = document.getElementById("chat-form");
+const userInput = document.getElementById("user-input");
+const chatBox = document.getElementById("chat-box");
 
-async function sendMessage() {
-  const textarea = document.getElementById("message");
-  const message = textarea.value.trim();
+chatForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const message = userInput.value.trim();
   if (!message) return;
 
   appendMessage("user", message);
-  textarea.value = "";
-
+  userInput.value = "";
   appendMessage("bot", "Mengetik...");
 
-  const res = await fetch("https://your-backend-url/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-  });
+  try {
+    const res = await fetch("https://chatbot-backend-production-66f6.up.railway.app/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message }),
+    });
 
-  const data = await res.json();
-
-  // Hapus "Mengetik..." dan tambahkan balasan sebenarnya
-  const botMessages = document.querySelectorAll(".bot");
-  botMessages[botMessages.length - 1].remove();
-  appendMessage("bot", data.response);
-}
+    const data = await res.json();
+    removeLastBotMessage();
+    appendMessage("bot", data.response || "Maaf, tidak ada balasan.");
+  } catch (err) {
+    console.error(err);
+    removeLastBotMessage();
+    appendMessage("bot", "Terjadi kesalahan saat menghubungi server.");
+  }
+});
 
 function appendMessage(role, text) {
   const msg = document.createElement("div");
-  msg.className = role;
+  msg.classList.add("message", role);
   msg.textContent = text;
-  chatbox.appendChild(msg);
-  chatbox.scrollTop = chatbox.scrollHeight;
+  chatBox.appendChild(msg);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeLastBotMessage() {
+  const messages = document.querySelectorAll(".bot");
+  if (messages.length > 0) messages[messages.length - 1].remove();
 }
